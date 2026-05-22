@@ -43,9 +43,7 @@ def build_graph(checkpointer: BaseCheckpointSaver | None = None) -> CompiledStat
         .add_edge(START, "planner")
         .add_edge("planner", "plan_review")
         .add_edge("plan_review", "researcher")
-        .add_conditional_edges(
-            "researcher", more_queries, ["researcher", "synthesizer"]
-        )
+        .add_conditional_edges("researcher", more_queries, ["researcher", "synthesizer"])
         .add_edge("synthesizer", END)
     )
     return builder.compile(checkpointer=checkpointer)

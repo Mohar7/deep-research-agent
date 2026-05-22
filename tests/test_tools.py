@@ -61,9 +61,10 @@ async def test_fetch_url_truncates_long_pages() -> None:
 @pytest.mark.asyncio
 async def test_fetch_url_raises_on_http_error() -> None:
     err_response = _mock_httpx_response("not found", status_code=404)
-    with patch(
-        "httpx.AsyncClient.get", new=AsyncMock(return_value=err_response)
-    ), pytest.raises(httpx.HTTPStatusError):
+    with (
+        patch("httpx.AsyncClient.get", new=AsyncMock(return_value=err_response)),
+        pytest.raises(httpx.HTTPStatusError),
+    ):
         await fetch_url("https://example.com/missing")
 
 

@@ -49,6 +49,7 @@ async def web_search(query: str, max_results: int = 5) -> list[SearchHit]:
 
     DDGS is sync; we run it in a thread so we don't block the event loop.
     """
+
     def _run() -> list[SearchHit]:
         with DDGS() as ddgs:
             raw = list(ddgs.text(query, max_results=max_results))

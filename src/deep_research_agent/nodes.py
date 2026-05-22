@@ -162,9 +162,7 @@ async def researcher(state: ResearchState, config: RunnableConfig) -> dict[str, 
     }
 
 
-async def _summarize_hits(
-    query: str, hits: list, model: BaseChatModel
-) -> list[Finding]:
+async def _summarize_hits(query: str, hits: list, model: BaseChatModel) -> list[Finding]:
     """Fetch + summarize hits concurrently. Drops failures and SKIPs."""
 
     async def _one(hit) -> Finding | None:
@@ -248,9 +246,7 @@ async def synthesizer(state: ResearchState, config: RunnableConfig) -> dict[str,
     report = await structured.ainvoke(
         [
             SystemMessage(content=SYNTHESIZER_SYSTEM),
-            HumanMessage(
-                content=f"TOPIC: {topic}\n\nFINDINGS:\n{findings_text}"
-            ),
+            HumanMessage(content=f"TOPIC: {topic}\n\nFINDINGS:\n{findings_text}"),
         ]
     )
 

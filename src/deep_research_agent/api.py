@@ -137,9 +137,7 @@ async def start_research(req: StartResearchRequest) -> StartResearchResponse:
 async def resume_research(thread_id: str, req: ResumeRequest) -> StartResearchResponse:
     """Resume a thread that paused at `interrupt()`."""
     graph = _graph()
-    result = await graph.ainvoke(
-        Command(resume=req.payload), _config_for(thread_id)
-    )
+    result = await graph.ainvoke(Command(resume=req.payload), _config_for(thread_id))
     return StartResearchResponse(
         thread_id=thread_id,
         state=_safe_state(result),

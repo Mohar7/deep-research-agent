@@ -31,9 +31,7 @@ def test_parse_numbered_list_drops_empty_lines() -> None:
 
 @pytest.mark.asyncio
 async def test_planner_produces_plan_from_topic(fake_chat_model_factory) -> None:
-    fake = fake_chat_model_factory(
-        ["1. Query A\n2. Query B\n3. Query C"]
-    )
+    fake = fake_chat_model_factory(["1. Query A\n2. Query B\n3. Query C"])
     state = {"topic": "async python performance"}
     config = {"configurable": {"model": fake}}
 
