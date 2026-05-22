@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -68,21 +69,20 @@ async def test_graph_pauses_at_hitl_then_resumes(fake_chat_model_factory) -> Non
     fake = FakeModel()
     config = {"configurable": {"thread_id": "test-thread", "model": fake}}
 
-    async with _mock_network():
-        async with _build_graph_with_memory() as graph:
-            # First invoke: should pause at plan_review.
-            first = await graph.ainvoke({"topic": "X"}, config)
-            interrupts = first.get("__interrupt__")
-            assert interrupts, "Expected the graph to pause at HITL gate"
-            assert interrupts[0].value["type"] == "approve_plan"
+    async with _mock_network(), _build_graph_with_memory() as graph:
+        # First invoke: should pause at plan_review.
+        first = await graph.ainvoke({"topic": "X"}, config)
+        interrupts = first.get("__interrupt__")
+        assert interrupts, "Expected the graph to pause at HITL gate"
+        assert interrupts[0].value["type"] == "approve_plan"
 
-            # Resume with no edit — accept planner output as-is.
-            final = await graph.ainvoke(Command(resume={"plan": None}), config)
+        # Resume with no edit — accept planner output as-is.
+        final = await graph.ainvoke(Command(resume={"plan": None}), config)
 
-            assert "report" in final
-            report = final["report"]
-            assert isinstance(report, ResearchReport)
-            assert report.topic == "X"
+        assert "report" in final
+        report = final["report"]
+        assert isinstance(report, ResearchReport)
+        assert report.topic == "X"
 
 
 # ---------- helpers ----------
