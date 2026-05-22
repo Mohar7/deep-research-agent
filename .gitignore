@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+junit.xml
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Persistence (per-run state)
+*.sqlite
+*.sqlite-journal
+checkpoints.sqlite*
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
