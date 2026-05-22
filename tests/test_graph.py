@@ -88,9 +88,6 @@ async def test_graph_pauses_at_hitl_then_resumes(fake_chat_model_factory) -> Non
 # ---------- helpers ----------
 
 
-import contextlib
-
-
 @contextlib.asynccontextmanager
 async def _build_graph_with_memory():
     """Compile the graph with an in-memory checkpointer (good enough for tests)."""
